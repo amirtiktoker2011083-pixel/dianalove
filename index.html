@@ -24,39 +24,72 @@ body{
 
     background:
     linear-gradient(
-    135deg,
-    #fff0f7 0%,
-    #ffd6ea 30%,
-    #ffb6d9 60%,
-    #fff0f7 100%
+    180deg,
+    #fff7fb 0%,
+    #ffd8ea 45%,
+    #ffbfdc 100%
     );
 
     position:relative;
 }
 
-/* 🌸 САКУРА */
+/* 🌸 ДЕРЕВО САКУРЫ */
+
+.tree{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    opacity:0.95;
+
+    z-index:1;
+
+    pointer-events:none;
+
+    animation:treeFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes treeFloat{
+
+    from{
+        transform:translateY(0px);
+    }
+
+    to{
+        transform:translateY(6px);
+    }
+}
+
+/* 🌸 ЛЕПЕСТКИ */
 
 .sakura{
 
     position:fixed;
 
-    top:-100px;
+    top:-50px;
+
+    z-index:2;
 
     font-size:24px;
 
     pointer-events:none;
 
-    animation:fall linear infinite;
-
-    z-index:1;
+    animation:
+    sakuraFall linear infinite,
+    sakuraGlow 2s ease-in-out infinite alternate;
 }
 
-@keyframes fall{
+/* ПАДЕНИЕ */
+
+@keyframes sakuraFall{
 
     0%{
         transform:
         translateY(-100px)
-        translateX(0px)
         rotate(0deg);
 
         opacity:0;
@@ -69,10 +102,26 @@ body{
     100%{
         transform:
         translateY(120vh)
-        translateX(60px)
         rotate(360deg);
 
         opacity:0;
+    }
+}
+
+/* ГЛОВ */
+
+@keyframes sakuraGlow{
+
+    from{
+        filter:
+        drop-shadow(0 0 3px white)
+        brightness(1);
+    }
+
+    to{
+        filter:
+        drop-shadow(0 0 10px #ff9ccc)
+        brightness(1.2);
     }
 }
 
@@ -82,11 +131,11 @@ body{
 
     position:relative;
 
-    z-index:3;
+    z-index:5;
 
     width:100%;
 
-    padding-top:40px;
+    padding-top:50px;
 
     display:flex;
 
@@ -103,7 +152,7 @@ body{
 
     position:relative;
 
-    height:700px;
+    height:720px;
 }
 
 .photo{
@@ -114,24 +163,24 @@ body{
 
     max-width:170px;
 
-    border-radius:12px;
+    border-radius:14px;
 
     box-shadow:
-    0 0 15px rgba(255,255,255,0.5);
+    0 0 20px rgba(255,255,255,0.7);
 
     transition:0.3s;
 }
 
 .photo:hover{
 
-    transform:scale(1.03);
+    transform:scale(1.04);
 }
 
 /* РАСПОЛОЖЕНИЕ */
 
 .photo1{
 
-    top:40px;
+    top:60px;
     left:20px;
 
     transform:rotate(-5deg);
@@ -139,7 +188,7 @@ body{
 
 .photo2{
 
-    top:240px;
+    top:270px;
     right:20px;
 
     transform:rotate(5deg);
@@ -147,7 +196,7 @@ body{
 
 .photo3{
 
-    top:500px;
+    top:530px;
     left:70px;
 
     transform:rotate(-4deg);
@@ -165,12 +214,10 @@ body{
 
     align-items:center;
 
-    margin-top:20px;
-
-    padding-bottom:50px;
+    padding-bottom:60px;
 }
 
-/* ЗАГОЛОВОК */
+/* PLAYLIST TEXT */
 
 .playlist h1{
 
@@ -181,12 +228,12 @@ body{
     margin-bottom:25px;
 
     text-shadow:
-    0 0 6px white,
-    0 0 12px white,
-    0 0 20px rgba(255,255,255,0.8);
+    0 0 8px white,
+    0 0 16px white,
+    0 0 30px #fff;
 }
 
-/* ТРЕК */
+/* TRACK */
 
 .track{
 
@@ -194,7 +241,7 @@ body{
 
     max-width:320px;
 
-    margin-bottom:25px;
+    margin-bottom:28px;
 
     text-align:center;
 }
@@ -203,49 +250,24 @@ body{
 
     color:white;
 
-    margin-bottom:8px;
+    margin-bottom:10px;
 
     font-size:18px;
 
     text-shadow:
-    0 0 10px white,
-    0 0 20px white;
+    0 0 8px white,
+    0 0 16px white;
 }
 
-/* АУДИО */
+/* AUDIO */
 
 audio{
 
     width:100%;
-}
 
-/* ПК ВЕРСИЯ */
+    border-radius:20px;
 
-@media(min-width:768px){
-
-    .photos{
-        height:650px;
-    }
-
-    .photo{
-        width:180px;
-    }
-
-    .photo1{
-        left:140px;
-    }
-
-    .photo2{
-        right:140px;
-    }
-
-    .photo3{
-        left:220px;
-    }
-
-    .playlist h1{
-        font-size:52px;
-    }
+    opacity:0.95;
 }
 
 </style>
@@ -253,35 +275,35 @@ audio{
 
 <body>
 
-<!-- 🌸 САКУРА -->
+<!-- 🌸 ДЕРЕВО -->
 
-<div class="sakura" style="left:2%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:6%;animation-duration:7s;">🌸</div>
-<div class="sakura" style="left:10%;animation-duration:8s;">🌸</div>
-<div class="sakura" style="left:15%;animation-duration:6s;">🌸</div>
+<img src="1000041669.jpg" class="tree">
+
+<!-- 🌸 ПАДАЮЩИЕ ЛЕПЕСТКИ -->
+
+<div class="sakura" style="left:3%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:8%;animation-duration:8s;">🌸</div>
+<div class="sakura" style="left:14%;animation-duration:6s;">🌸</div>
 <div class="sakura" style="left:20%;animation-duration:9s;">🌸</div>
+<div class="sakura" style="left:26%;animation-duration:7s;">🌸</div>
 
-<div class="sakura" style="left:25%;animation-duration:7s;">🌸</div>
-<div class="sakura" style="left:30%;animation-duration:8s;">🌸</div>
-<div class="sakura" style="left:35%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:40%;animation-duration:9s;">🌸</div>
-<div class="sakura" style="left:45%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:32%;animation-duration:8s;">🌸</div>
+<div class="sakura" style="left:38%;animation-duration:6s;">🌸</div>
+<div class="sakura" style="left:44%;animation-duration:9s;">🌸</div>
+<div class="sakura" style="left:50%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:56%;animation-duration:8s;">🌸</div>
 
-<div class="sakura" style="left:50%;animation-duration:8s;">🌸</div>
-<div class="sakura" style="left:55%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:60%;animation-duration:9s;">🌸</div>
-<div class="sakura" style="left:65%;animation-duration:7s;">🌸</div>
-<div class="sakura" style="left:70%;animation-duration:8s;">🌸</div>
-
-<div class="sakura" style="left:75%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:80%;animation-duration:9s;">🌸</div>
-<div class="sakura" style="left:85%;animation-duration:7s;">🌸</div>
-<div class="sakura" style="left:90%;animation-duration:8s;">🌸</div>
-<div class="sakura" style="left:95%;animation-duration:6s;">🌸</div>
+<div class="sakura" style="left:62%;animation-duration:6s;">🌸</div>
+<div class="sakura" style="left:68%;animation-duration:9s;">🌸</div>
+<div class="sakura" style="left:74%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:80%;animation-duration:8s;">🌸</div>
+<div class="sakura" style="left:86%;animation-duration:6s;">🌸</div>
+<div class="sakura" style="left:92%;animation-duration:9s;">🌸</div>
 
 <div class="container">
 
     <!-- ФОТО -->
+
     <div class="photos">
 
         <img src="d1.jpg" class="photo photo1">
