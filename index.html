@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Diana Sakura</title>
 
 <style>
@@ -15,26 +14,13 @@
 }
 
 body{
-
     font-family:Arial,sans-serif;
-
-    /* FIX: включаем скролл */
     overflow-y:auto;
-
     min-height:100vh;
-
-    background:
-    linear-gradient(
-    180deg,
-    #fff4fa 0%,
-    #ffd6ea 45%,
-    #ffbddb 100%
-    );
-
-    position:relative;
+    background:linear-gradient(180deg,#fff4fa,#ffd6ea,#ffbddb);
 }
 
-/* TIME */
+/* CLOCK */
 .time-box{
     position:fixed;
     top:15px;
@@ -53,59 +39,37 @@ body{
     font-weight:bold;
 }
 
-/* SAKURA */
-.sakura{
-    position:fixed;
-    top:-50px;
-    pointer-events:none;
-    z-index:999;
-    animation:sakuraFall linear forwards;
-}
-
-@keyframes sakuraFall{
-    0%{
-        transform:translateY(-100px);
-        opacity:0;
-    }
-    10%{opacity:1;}
-    100%{
-        transform:translateY(120vh)
-        translateX(calc(-40px + 80px * var(--random)))
-        rotate(360deg);
-        opacity:0;
-    }
-}
-
 /* CONTAINER */
 .container{
-    position:relative;
-    z-index:5;
-    width:100%;
     padding-top:90px;
-
     display:flex;
     flex-direction:column;
     align-items:center;
 }
 
-/* FIX CENTER BUTTON */
+/* BUTTON */
 .love-btn{
     margin:20px auto 40px;
     display:inline-block;
-
-    text-decoration:none;
     background:#ff8fc7;
     color:white;
     padding:14px 34px;
     border-radius:999px;
-    font-size:18px;
+    text-decoration:none;
     font-weight:bold;
+    transition:0.25s ease;
+}
+
+/* 💗 hover pulse */
+.love-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 20px rgba(255,255,255,0.8);
 }
 
 /* PHOTOS */
 .photos{
-    width:100%;
     position:relative;
+    width:100%;
     height:700px;
 }
 
@@ -116,12 +80,17 @@ body{
     border-radius:18px;
     border:3px solid white;
     box-shadow:0 0 20px rgba(255,255,255,0.9);
+    transition:0.25s ease;
 }
 
-/* POSITIONS */
+/* hover zoom */
+.photo:hover{
+    transform:scale(1.08);
+}
+
 .photo1{top:20px;left:20px;rotate:-5deg;}
 .photo2{top:250px;right:20px;rotate:5deg;}
-.photo3{top:500px;left:70px;rotate:-4deg;}
+.photo3{top:500px;left:40px;rotate:-4deg;} /* 👈 сдвинута левее */
 
 /* PLAYLIST */
 .playlist{
@@ -139,7 +108,7 @@ body{
     text-shadow:0 0 10px white;
 }
 
-/* TRACKS */
+/* TRACK */
 .track{
     width:290px;
     background:rgba(255,255,255,0.18);
@@ -155,19 +124,18 @@ body{
 }
 
 .track:hover{
-    transform:scale(1.03);
+    transform:scale(1.05);
 }
 
 .track.active{
     background:rgba(255,255,255,0.35);
 }
 
-/* CONTROLS */
+/* CONTROLS (СТАБИЛЬНО КАК У ТЕБЯ ВО 2 ПРОЕКТЕ) */
 .controls{
     display:none;
     gap:30px;
-    margin-top:10px;
-    margin-bottom:20px;
+    margin:10px 0 20px;
 }
 
 .controls.show{
@@ -184,13 +152,27 @@ body{
     justify-content:center;
     cursor:pointer;
     font-size:26px;
+    transition:0.2s;
 }
 
-/* MOBILE */
-@media(max-width:600px){
-    .photos{height:640px;}
-    .photo{width:42vw;}
-    .track{width:88%;}
+.controls span:hover{
+    transform:scale(1.2);
+}
+
+/* 🌸 SAKURA / LEAVES */
+.sakura{
+    position:fixed;
+    top:-20px;
+    pointer-events:none;
+    z-index:9999;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:0;
+    }
 }
 
 </style>
@@ -205,53 +187,38 @@ body{
 
 <div class="container">
 
-    <!-- BUTTON FIXED -->
-    <a href="https://t.me/ilmbfsmDD" target="_blank" class="love-btn">
-        Люблю Диану
-    </a>
+<a href="https://t.me/ilmbfsmDD" class="love-btn">
+    Люблю Диану
+</a>
 
-    <!-- PHOTOS -->
-    <div class="photos">
-        <img src="d1.jpg" class="photo photo1">
-        <img src="d2.jpg" class="photo photo2">
-        <img src="d3.jpg" class="photo photo3">
-    </div>
-
-    <!-- PLAYLIST -->
-    <div class="playlist">
-
-        <div class="playlist-title">playlist</div>
-
-        <div class="track" onclick="playTrack(0)">spicy</div>
-        <div class="track" onclick="playTrack(1)">Тебе нравится</div>
-        <div class="track" onclick="playTrack(2)">Ведь Меня Погубила Глубина Этих Глаз</div>
-        <div class="controls" id="controls">
-            <span onclick="prev()">⏮️</span>
-            <span id="playBtn" onclick="toggle()">▶️</span>
-            <span onclick="next()">⏭️</span>
-        </div>
-
-    </div>
+<div class="photos">
+    <img src="d1.jpg" class="photo photo1">
+    <img src="d2.jpg" class="photo photo2">
+    <img src="d3.jpg" class="photo photo3">
 </div>
 
-<audio id="audio" playsinline preload="auto"></audio>
+<div class="playlist">
+
+<div class="playlist-title">playlist</div>
+
+<div class="track" onclick="playTrack(0)">spicy</div>
+<div class="track" onclick="playTrack(1)">Тебе нравится</div>
+<div class="track" onclick="playTrack(2)">Ведь Меня Погубила Глубина Этих Глаз</div>
+
+<div class="controls" id="controls">
+    <span onclick="prev()">⏮️</span>
+    <span onclick="toggle()" id="playBtn">▶️</span>
+    <span onclick="next()">⏭️</span>
+</div>
+
+</div>
+
+</div>
+
+<audio id="audio"></audio>
 
 <script>
-
-/* SAKURA */
-function createSakura(){
-    const s=document.createElement("div");
-    s.className="sakura";
-    s.innerHTML="🌸";
-    s.style.left=Math.random()*100+"vw";
-    s.style.setProperty("--random",Math.random());
-    s.style.animationDuration=(8+Math.random()*8)+"s";
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),17000);
-}
-setInterval(createSakura,350);
-
-/* CLOCK */
+    /* CLOCK */
 function updateClock(){
     const d=new Date();
     let h=d.getHours();
@@ -263,11 +230,11 @@ function updateClock(){
 setInterval(updateClock,1000);
 updateClock();
 
-/* AUDIO TRACKS (ВАШИ РАБОЧИЕ СООТВЕТСТВИЯ) */
+/* TRACKS */
 const tracks=[
-    "mp1.mp3", // spicy
-    "mp2.mp3", // Тебе нравится
-    "mp3.mp3"  // Глубина глаз
+    "mp1.mp3",
+    "mp2.mp3",
+    "mp3.mp3"
 ];
 
 let current=0;
@@ -282,24 +249,12 @@ function playTrack(i){
 
     current=i;
 
-    audio.pause();
     audio.src=tracks[i];
-    audio.load();
-
-    const playPromise = audio.play();
-
-    if(playPromise !== undefined){
-        playPromise.then(()=>{
-            playBtn.innerText="⏸️";
-        }).catch(err=>{
-            console.log("Audio error:",err);
-        });
-    }
+    audio.play();
 
     trackEls.forEach(t=>t.classList.remove("active"));
     trackEls[i].classList.add("active");
 
-    /* FIX: не ломаем DOM через after() */
     controls.classList.add("show");
 }
 
@@ -326,7 +281,24 @@ function prev(){
     playTrack(current);
 }
 
-audio.addEventListener("ended",next);
+/* 🌸 SAKURA */
+function createSakura(){
+    const el=document.createElement("div");
+    el.className="sakura";
+
+    const items=["🌸","🍃","💮"];
+    el.innerHTML=items[Math.floor(Math.random()*items.length)];
+
+    el.style.left=Math.random()*100+"vw";
+    el.style.fontSize=(12+Math.random()*20)+"px";
+    el.style.animationDuration=(4+Math.random()*6)+"s";
+
+    document.body.appendChild(el);
+
+    setTimeout(()=>el.remove(),10000);
+}
+
+setInterval(createSakura,120);
 
 </script>
 
