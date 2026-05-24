@@ -71,7 +71,7 @@ body{
     0 0 10px #ffd4e8;
 }
 
-/* 🌸 ЛЕПЕСТКИ */
+/* 🌸 САКУРА */
 
 .sakura{
 
@@ -84,7 +84,7 @@ body{
     pointer-events:none;
 
     animation:
-    sakuraFall linear infinite,
+    sakuraFall linear forwards,
     glow 2s ease-in-out infinite alternate;
 }
 
@@ -172,14 +172,26 @@ body{
     0 0 20px rgba(255,255,255,0.9);
 
     z-index:10;
+
+    transition:0.3s;
 }
+
+/* ПУЛЬС */
+
+.photo:hover,
+.photo:active{
+
+    transform:scale(1.08);
+}
+
+/* ПОЗИЦИИ */
 
 .photo1{
 
     top:20px;
     left:20px;
 
-    transform:rotate(-5deg);
+    rotate:-5deg;
 }
 
 .photo2{
@@ -187,7 +199,7 @@ body{
     top:250px;
     right:20px;
 
-    transform:rotate(5deg);
+    rotate:5deg;
 }
 
 .photo3{
@@ -195,7 +207,7 @@ body{
     top:500px;
     left:70px;
 
-    transform:rotate(-4deg);
+    rotate:-4deg;
 }
 
 /* PLAYLIST */
@@ -261,6 +273,11 @@ body{
 
     box-shadow:
     0 0 15px rgba(255,255,255,0.4);
+}
+
+.track:hover{
+
+    transform:scale(1.03);
 }
 
 .track.active{
@@ -351,7 +368,6 @@ body{
     <div class="playlist">
 
         <div class="playlist-title">playlist</div>
-
         <div class="track" onclick="playTrack(0)">
             spicy
         </div>
@@ -359,20 +375,21 @@ body{
         <!-- КНОПКИ -->
 
         <div class="controls" id="controls">
+
             <span onclick="prev()">⏮️</span>
 
-            <span onclick="toggle()">▶️</span>
+            <span id="playBtn" onclick="toggle()">▶️</span>
 
             <span onclick="next()">⏭️</span>
 
         </div>
 
         <div class="track" onclick="playTrack(1)">
-            Ведь Меня Погубила Глубина Этих Глаз
+            Тебе нравится
         </div>
 
         <div class="track" onclick="playTrack(2)">
-            Тебе нравится
+            Ведь Меня Погубила Глубина Этих Глаз
         </div>
 
     </div>
@@ -387,7 +404,7 @@ body{
 
 /* 🌸 БЕСКОНЕЧНЫЕ ЛЕПЕСТКИ */
 
-for(let i = 0; i < 60; i++){
+setInterval(() => {
 
     const sakura = document.createElement("div");
 
@@ -396,19 +413,23 @@ for(let i = 0; i < 60; i++){
     sakura.innerHTML = "🌸";
 
     sakura.style.left =
-        Math.random() * 100 + "vw";
+        Math.random() * window.innerWidth + "px";
 
     sakura.style.fontSize =
-        (18 + Math.random() * 18) + "px";
+        (18 + Math.random() * 22) + "px";
 
     sakura.style.animationDuration =
-        (4 + Math.random() * 5) + "s";
-
-    sakura.style.animationDelay =
-        Math.random() * 5 + "s";
+        (4 + Math.random() * 4) + "s";
 
     document.body.appendChild(sakura);
-}
+
+    setTimeout(() => {
+
+        sakura.remove();
+
+    }, 9000);
+
+}, 120);
 
 /* ЧАСЫ */
 
@@ -436,9 +457,9 @@ const tracks = [
 
     "mp1.mp3",
 
-    "mp3.mp3",
+    "mp2.mp3",
 
-    "mp2.mp3"
+    "mp3.mp3"
 ];
 
 let current = 0;
@@ -449,7 +470,7 @@ const trackEls = document.querySelectorAll(".track");
 
 const controls = document.getElementById("controls");
 
-const playBtn = controls.children[1];
+const playBtn = document.getElementById("playBtn");
 
 /* PLAY TRACK */
 
@@ -510,7 +531,7 @@ function prev(){
     playTrack(current);
 }
 
-/* АВТО NEXT */
+/* AUTO NEXT */
 
 audio.addEventListener("ended", () => {
 
