@@ -2,75 +2,149 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Diana Gallery</title>
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        background: url("1000041660.jpg") no-repeat center/cover;
-        font-family: Arial, sans-serif;
-        overflow: hidden;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+
+    /* ТВОЙ ФОН */
+    background:url("fon.jpg") no-repeat center center;
+    background-size:cover;
+
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    position:relative;
+    width:100%;
+    height:100%;
+}
+
+/* Окошки */
+
+.frame{
+    position:absolute;
+    width:220px;
+    height:220px;
+
+    background:white;
+
+    border:7px solid black;
+    border-radius:12px;
+
+    overflow:hidden;
+
+    transition:0.3s;
+}
+
+.frame:hover{
+    transform:scale(1.05);
+}
+
+/* Фото внутри */
+
+.frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* Позиции */
+
+.frame1{
+    top:120px;
+    left:180px;
+}
+
+.frame2{
+    top:340px;
+    right:160px;
+}
+
+.frame3{
+    bottom:120px;
+    left:100px;
+}
+
+/* Зайчик */
+
+.bunny{
+    position:absolute;
+
+    bottom:20px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:240px;
+
+    pointer-events:none;
+}
+
+/* Адаптация под телефон */
+
+@media (max-width:768px){
+
+    .frame{
+        width:160px;
+        height:160px;
     }
 
-    .container {
-        position: relative;
-        width: 100%;
-        height: 100%;
+    .frame1{
+        top:90px;
+        left:20px;
     }
 
-    /* Общий стиль для окон */
-    .frame {
-        position: absolute;
-        width: 200px;
-        height: 200px;
-        border: 6px solid black;
-        border-radius: 10px;
-        overflow: hidden;
-        background: white;
+    .frame2{
+        top:320px;
+        right:20px;
     }
 
-    .frame img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    .frame3{
+        bottom:140px;
+        left:20px;
     }
 
-    /* Позиции окон (подогнаны под твой макет) */
-    .frame1 { top: 120px; left: 180px; }
-    .frame2 { top: 350px; right: 150px; }
-    .frame3 { bottom: 120px; left: 120px; }
-
-    /* Зайчик */
-    .bunny {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 200px;
-        pointer-events: none;
+    .bunny{
+        width:180px;
     }
+}
+
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
+    <!-- Фото 1 -->
     <div class="frame frame1">
         <img src="diana1.jpg" alt="">
     </div>
 
+    <!-- Фото 2 -->
     <div class="frame frame2">
         <img src="diana2.jpg" alt="">
     </div>
 
+    <!-- Фото 3 -->
     <div class="frame frame3">
         <img src="diana3.jpg" alt="">
     </div>
 
-    <!-- Зайчик без фона -->
+    <!-- Зайчик -->
     <img src="bunny.png" class="bunny" alt="">
 
 </div>
