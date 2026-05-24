@@ -25,46 +25,53 @@ body{
     background:
     linear-gradient(
     180deg,
-    #fff7fb 0%,
-    #ffd8ea 45%,
-    #ffbfdc 100%
+    #fff4fa 0%,
+    #ffd6ea 45%,
+    #ffbddb 100%
     );
 
     position:relative;
 }
 
-/* 🌸 ДЕРЕВО САКУРЫ */
+/* ВРЕМЯ */
 
-.tree{
+.time-box{
 
     position:fixed;
 
-    top:0;
-    left:0;
+    top:15px;
 
-    width:100%;
+    left:50%;
 
-    opacity:0.95;
+    transform:translateX(-50%);
 
-    z-index:1;
+    background:white;
 
-    pointer-events:none;
+    padding:12px 32px;
 
-    animation:treeFloat 6s ease-in-out infinite alternate;
+    border-radius:999px;
+
+    z-index:999;
+
+    box-shadow:
+    0 0 20px rgba(255,255,255,0.9);
 }
 
-@keyframes treeFloat{
+#clock{
 
-    from{
-        transform:translateY(0px);
-    }
+    color:#ff7eb7;
 
-    to{
-        transform:translateY(6px);
-    }
+    font-size:24px;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    text-shadow:
+    0 0 10px #ffd4e8;
 }
 
-/* 🌸 ЛЕПЕСТКИ */
+/* 🌸 САКУРА */
 
 .sakura{
 
@@ -72,7 +79,7 @@ body{
 
     top:-50px;
 
-    z-index:2;
+    z-index:1;
 
     font-size:24px;
 
@@ -80,10 +87,8 @@ body{
 
     animation:
     sakuraFall linear infinite,
-    sakuraGlow 2s ease-in-out infinite alternate;
+    glow 2s ease-in-out infinite alternate;
 }
-
-/* ПАДЕНИЕ */
 
 @keyframes sakuraFall{
 
@@ -108,20 +113,16 @@ body{
     }
 }
 
-/* ГЛОВ */
-
-@keyframes sakuraGlow{
+@keyframes glow{
 
     from{
         filter:
-        drop-shadow(0 0 3px white)
-        brightness(1);
+        drop-shadow(0 0 2px white);
     }
 
     to{
         filter:
-        drop-shadow(0 0 10px #ff9ccc)
-        brightness(1.2);
+        drop-shadow(0 0 10px #ff8fc7);
     }
 }
 
@@ -135,7 +136,7 @@ body{
 
     width:100%;
 
-    padding-top:50px;
+    padding-top:90px;
 
     display:flex;
 
@@ -152,7 +153,7 @@ body{
 
     position:relative;
 
-    height:720px;
+    height:700px;
 }
 
 .photo{
@@ -173,14 +174,12 @@ body{
 
 .photo:hover{
 
-    transform:scale(1.04);
+    transform:scale(1.03);
 }
-
-/* РАСПОЛОЖЕНИЕ */
 
 .photo1{
 
-    top:60px;
+    top:20px;
     left:20px;
 
     transform:rotate(-5deg);
@@ -188,7 +187,7 @@ body{
 
 .photo2{
 
-    top:270px;
+    top:240px;
     right:20px;
 
     transform:rotate(5deg);
@@ -196,7 +195,7 @@ body{
 
 .photo3{
 
-    top:530px;
+    top:500px;
     left:70px;
 
     transform:rotate(-4deg);
@@ -217,57 +216,123 @@ body{
     padding-bottom:60px;
 }
 
-/* PLAYLIST TEXT */
-
-.playlist h1{
+.playlist-title{
 
     color:white;
 
     font-size:42px;
 
-    margin-bottom:25px;
+    margin-bottom:30px;
 
     text-shadow:
     0 0 8px white,
-    0 0 16px white,
-    0 0 30px #fff;
+    0 0 18px white,
+    0 0 30px white;
 }
 
-/* TRACK */
+/* ТРЕКИ */
 
 .track{
 
-    width:90%;
+    width:280px;
 
-    max-width:320px;
+    background:
+    rgba(255,255,255,0.2);
 
-    margin-bottom:28px;
+    backdrop-filter:blur(10px);
 
-    text-align:center;
-}
+    padding:16px;
 
-.track p{
+    border-radius:20px;
+
+    margin-bottom:18px;
 
     color:white;
 
-    margin-bottom:10px;
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:0.3s;
 
     font-size:18px;
 
     text-shadow:
-    0 0 8px white,
-    0 0 16px white;
+    0 0 8px white;
+
+    box-shadow:
+    0 0 15px rgba(255,255,255,0.3);
 }
 
-/* AUDIO */
+.track:hover{
 
-audio{
+    transform:scale(1.03);
+}
 
-    width:100%;
+.track.active{
 
-    border-radius:20px;
+    background:
+    rgba(255,255,255,0.35);
 
-    opacity:0.95;
+    box-shadow:
+    0 0 25px white;
+}
+
+/* КНОПКИ */
+
+.controls{
+
+    display:none;
+
+    gap:25px;
+
+    margin-bottom:25px;
+
+    color:white;
+
+    font-size:34px;
+
+    text-shadow:
+    0 0 10px white,
+    0 0 20px #ffb6d9;
+}
+
+.controls.show{
+
+    display:flex;
+}
+
+.controls span{
+
+    cursor:pointer;
+
+    transition:0.2s;
+}
+
+.controls span:hover{
+
+    transform:scale(1.2);
+}
+
+/* ПК */
+
+@media(min-width:768px){
+
+    .photo{
+        width:180px;
+    }
+
+    .photo1{
+        left:150px;
+    }
+
+    .photo2{
+        right:150px;
+    }
+
+    .photo3{
+        left:240px;
+    }
 }
 
 </style>
@@ -275,30 +340,29 @@ audio{
 
 <body>
 
-<!-- 🌸 ДЕРЕВО -->
+<!-- ВРЕМЯ -->
 
-<img src="1000041669.jpg" class="tree">
+<div class="time-box">
+    <span id="clock">00 : 00</span>
+</div>
 
-<!-- 🌸 ПАДАЮЩИЕ ЛЕПЕСТКИ -->
+<!-- 🌸 ЛЕПЕСТКИ -->
 
 <div class="sakura" style="left:3%;animation-duration:7s;">🌸</div>
-<div class="sakura" style="left:8%;animation-duration:8s;">🌸</div>
-<div class="sakura" style="left:14%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:20%;animation-duration:9s;">🌸</div>
-<div class="sakura" style="left:26%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:10%;animation-duration:8s;">🌸</div>
+<div class="sakura" style="left:17%;animation-duration:6s;">🌸</div>
+<div class="sakura" style="left:24%;animation-duration:9s;">🌸</div>
+<div class="sakura" style="left:31%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:38%;animation-duration:8s;">🌸</div>
+<div class="sakura" style="left:45%;animation-duration:6s;">🌸</div>
+<div class="sakura" style="left:52%;animation-duration:9s;">🌸</div>
+<div class="sakura" style="left:59%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:66%;animation-duration:8s;">🌸</div>
 
-<div class="sakura" style="left:32%;animation-duration:8s;">🌸</div>
-<div class="sakura" style="left:38%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:44%;animation-duration:9s;">🌸</div>
-<div class="sakura" style="left:50%;animation-duration:7s;">🌸</div>
-<div class="sakura" style="left:56%;animation-duration:8s;">🌸</div>
-
-<div class="sakura" style="left:62%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:68%;animation-duration:9s;">🌸</div>
-<div class="sakura" style="left:74%;animation-duration:7s;">🌸</div>
-<div class="sakura" style="left:80%;animation-duration:8s;">🌸</div>
-<div class="sakura" style="left:86%;animation-duration:6s;">🌸</div>
-<div class="sakura" style="left:92%;animation-duration:9s;">🌸</div>
+<div class="sakura" style="left:73%;animation-duration:6s;">🌸</div>
+<div class="sakura" style="left:80%;animation-duration:9s;">🌸</div>
+<div class="sakura" style="left:87%;animation-duration:7s;">🌸</div>
+<div class="sakura" style="left:94%;animation-duration:8s;">🌸</div>
 
 <div class="container">
 
@@ -318,41 +382,135 @@ audio{
 
     <div class="playlist">
 
-        <h1>playlist</h1>
+        <div class="playlist-title">playlist</div>
 
-        <div class="track">
+        <div class="track active" onclick="playTrack(0)">
+            spicy
+        </div>
 
-            <p>spicy</p>
+        <!-- КНОПКИ -->
 
-            <audio controls>
-                <source src="spicy.mp3" type="audio/mpeg">
-            </audio>
+        <div class="controls show" id="controls">
+
+            <span onclick="prev()">⏮️</span>
+
+            <span onclick="toggle()">▶️</span>
+
+            <span onclick="next()">⏭️</span>
 
         </div>
 
-        <div class="track">
-
-            <p>Ведь Меня Погубила Глубина Этих Глаз</p>
-
-            <audio controls>
-                <source src="Ведь Меня Погубила Глубина Этих Глаз.mp3" type="audio/mpeg">
-            </audio>
-
+        <div class="track" onclick="playTrack(1)">
+            Ведь Меня Погубила Глубина Этих Глаз
         </div>
 
-        <div class="track">
-
-            <p>Тебе нравится</p>
-
-            <audio controls>
-                <source src="Тебе нравится.mp3" type="audio/mpeg">
-            </audio>
-
+        <div class="track" onclick="playTrack(2)">
+            Тебе нравится
         </div>
 
     </div>
 
 </div>
+
+<!-- AUDIO -->
+
+<audio id="audio"></audio>
+
+<script>
+
+/* ТРЕКИ */
+
+const tracks = [
+
+    "spicy.mp3",
+
+    "Ведь Меня Погубила Глубина Этих Глаз.mp3",
+
+    "Тебе нравится.mp3"
+];
+
+let current = 0;
+
+const audio = document.getElementById("audio");
+
+const trackEls = document.querySelectorAll(".track");
+
+/* PLAY TRACK */
+
+function playTrack(index){
+
+    current = index;
+
+    audio.src = tracks[index];
+
+    audio.play();
+
+    trackEls.forEach(track =>
+        track.classList.remove("active")
+    );
+
+    trackEls[index].classList.add("active");
+}
+
+/* PLAY / PAUSE */
+
+function toggle(){
+
+    if(audio.paused){
+
+        audio.play();
+
+    }else{
+
+        audio.pause();
+    }
+}
+
+/* NEXT */
+
+function next(){
+
+    current = (current + 1) % tracks.length;
+
+    playTrack(current);
+}
+
+/* PREV */
+
+function prev(){
+
+    current = (current - 1 + tracks.length) % tracks.length;
+
+    playTrack(current);
+}
+
+/* ЧАСЫ */
+
+function updateClock(){
+
+    const now = new Date();
+
+    let hours = now.getHours();
+
+    let minutes = now.getMinutes();
+
+    if(hours < 10){
+        hours = "0" + hours;
+    }
+
+    if(minutes < 10){
+        minutes = "0" + minutes;
+    }
+
+    document.getElementById("clock").innerText =
+        hours + " : " + minutes;
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+</script>
 
 </body>
 </html>
