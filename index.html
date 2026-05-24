@@ -1,244 +1,222 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<title>Love</title>
+<!DOCTYPE html>  <html lang="ru">  
+<head>  
+<meta charset="UTF-8">  
+<title>Love</title>  <style>  
+body {  
+  margin: 0;  
+  background: black;  
+  font-family: Arial;  
+  color: white;  
+  overflow-x: hidden;  
+}  
+  
+/* кнопка сверху */  
+.center {  
+  display: flex;  
+  justify-content: center;  
+  margin-top: 30px;  
+}  
+  
+button {  
+  padding: 20px 60px;  
+  font-size: 22px;  
+  border-radius: 15px;  
+  border: none;  
+  background: hotpink;  
+  color: white;  
+  cursor: pointer;  
+}  
+  
+button:hover {  
+  transform: scale(1.1);  
+  box-shadow: 0 0 20px hotpink;  
+}  
+  
+/* фотки */  
+.gallery {  
+  margin-top: 80px;  
+  display: flex;  
+  flex-direction: column;  
+  gap: 100px;  
+}  
+  
+.card { width: 260px; }  
+  
+.card img {  
+  width: 100%;  
+  border-radius: 15px;  
+  border: 3px solid white;  
+  box-shadow: 0 0 25px pink;  
+}  
+  
+.left { margin-left: 10%; }  
+.right { margin-left: auto; margin-right: 10%; }  
+  
+/* 🎵 плеер */  
+.player {  
+  width: 320px;  
+  margin: 120px auto;  
+  padding: 20px;  
+  border-radius: 20px;  
+  background: rgba(255,255,255,0.05);  
+  backdrop-filter: blur(10px);  
+}  
+  
+.playlist {  
+  text-align: center;  
+  font-size: 24px;  
+  margin-bottom: 20px;  
+  text-shadow: 0 0 15px white;  
+}  
+  
+/* треки */  
+.track {  
+  padding: 12px;  
+  margin: 10px 0;  
+  border-radius: 10px;  
+  cursor: pointer;  
+  background: rgba(255,255,255,0.1);  
+  transition: 0.3s;  
+}  
+  
+.track.active {  
+  background: hotpink;  
+}  
+  
+/* 🎛 управление */  
+.controls {  
+  display: none;  
+  justify-content: center;  
+  gap: 18px;  
+  margin: 10px 0;  
+  
+  animation: drop 0.3s ease;  
+}  
+  
+.controls.show {  
+  display: flex;  
+}  
+  
+/* 💗 РОЗОВЫЕ КНОПКИ */  
+.controls span {  
+  font-size: 26px;  
+  cursor: pointer;  
+  
+  color: hotpink;  
+  
+  text-shadow:  
+    0 0 8px hotpink,  
+    0 0 15px hotpink;  
+  
+  transition: 0.3s;  
+}  
+  
+.controls span:hover {  
+  transform: scale(1.4);  
+  text-shadow:  
+    0 0 12px hotpink,  
+    0 0 25px hotpink,  
+    0 0 40px hotpink;  
+}  
+  
+/* анимация появления */  
+@keyframes drop {  
+  from {  
+    transform: translateY(-10px);  
+    opacity: 0;  
+  }  
+  to {  
+    transform: translateY(0);  
+    opacity: 1;  
+  }  
+}  
+  
+/* 🌸 сакура */  
+.sakura {  
+  position: fixed;  
+  top: -20px;  
+  pointer-events: none;  
+  z-index: 9999;  
+  animation: fall linear forwards;  
+}  
+  
+@keyframes fall {  
+  to {  
+    transform: translateY(110vh) rotate(360deg);  
+    opacity: 0;  
+  }  
+}  
+</style>  </head>  <body>  <div class="center">  
+  <button onclick="window.location.href='https://t.me/Conechka22056'">  
+    люблю соню  
+  </button>  
+</div>  <div class="gallery">  
+  <div class="card left"><img src="IMG_20260523_201659_341.jpg"></div>  
+  <div class="card right"><img src="IMG_20260523_201702_994.jpg"></div>  
+  <div class="card left"><img src="IMG_20260523_201704_693.jpg"></div>  
+</div>  <div class="player">  
+  <div class="playlist">playlist</div>    <div class="track" onclick="playTrack(0)">mayle</div>    <div class="controls" id="controls">  
+    <span onclick="prev()">⏮️</span>  
+    <span onclick="toggle()">⏯️</span>  
+    <span onclick="next()">⏭️</span>  
+  </div>    <div class="track" onclick="playTrack(1)">ты похож на кота</div>  
+  <div class="track" onclick="playTrack(2)">ты не такая</div>  
+  <div class="track" onclick="playTrack(3)">у девчонок</div>  
+</div>  <audio id="audio"></audio>
 
-<style>
-body {
-  margin: 0;
-  background: black;
-  font-family: Arial;
-  color: white;
-  overflow-x: hidden;
-}
-
-/* кнопка сверху */
-.center {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-button {
-  padding: 20px 60px;
-  font-size: 22px;
-  border-radius: 15px;
-  border: none;
-  background: hotpink;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px hotpink;
-}
-
-/* фотки */
-.gallery {
-  margin-top: 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
-}
-
-.card { width: 260px; }
-
-.card img {
-  width: 100%;
-  border-radius: 15px;
-  border: 3px solid white;
-  box-shadow: 0 0 25px pink;
-}
-
-.left { margin-left: 10%; }
-.right { margin-left: auto; margin-right: 10%; }
-
-/* 🎵 плеер */
-.player {
-  width: 320px;
-  margin: 120px auto;
-  padding: 20px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-}
-
-.playlist {
-  text-align: center;
-  font-size: 26px;
-  margin-bottom: 20px;
-  text-shadow: 0 0 15px white;
-}
-
-/* треки */
-.track {
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 10px;
-  cursor: pointer;
-  background: rgba(255,255,255,0.1);
-  transition: 0.3s;
-  text-align: center;
-}
-
-.track:hover {
-  transform: scale(1.05);
-}
-
-.track.active {
-  background: hotpink;
-  box-shadow: 0 0 20px hotpink;
-}
-
-/* 🎛 управление */
-.controls {
-  display: none;
-  justify-content: center;
-  gap: 18px;
-  margin: 10px 0;
-  animation: drop 0.3s ease;
-}
-
-.controls.show {
-  display: flex;
-}
-
-.controls span {
-  font-size: 26px;
-  cursor: pointer;
-  color: hotpink;
-  text-shadow: 0 0 8px hotpink;
-  transition: 0.3s;
-}
-
-.controls span:hover {
-  transform: scale(1.4);
-  text-shadow: 0 0 25px hotpink;
-}
-
-@keyframes drop {
-  from { transform: translateY(-10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* 🌸 сакура */
-.sakura {
-  position: fixed;
-  top: -20px;
-  pointer-events: none;
-  z-index: 9999;
-  animation: fall linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="center">
-  <button onclick="window.location.href='https://t.me/Conechka22056'">
-    люблю соню
-  </button>
-</div>
-
-<div class="gallery">
-  <div class="card left"><img src="IMG_20260523_201659_341.jpg"></div>
-  <div class="card right"><img src="IMG_20260523_201702_994.jpg"></div>
-  <div class="card left"><img src="IMG_20260523_201704_693.jpg"></div>
-</div>
-
-<div class="player">
-  <div class="playlist">playlist</div>
-
-  <div class="track" onclick="playTrack(0)">spicy</div>
-  <div class="track" onclick="playTrack(1)">Тебе Нравится</div>
-  <div class="track" onclick="playTrack(2)">Ведь Меня Погубила Глубина Этих Глаз</div>
-
-  <div class="controls" id="controls">
-    <span onclick="prev()">⏮️</span>
-    <span onclick="toggle()">⏯️</span>
-    <span onclick="next()">⏭️</span>
-  </div>
-</div>
-
-<audio id="audio"></audio>
-
-<script>
-
-/* 🎵 ТРЕКИ (ВАЖНО: mp1/mp2/mp3) */
-const tracks = [
-  "mp1.mp3",
-  "mp2.mp3",
-  "mp3.mp3"
-];
-
-let current = 0;
-
-const audio = document.getElementById("audio");
-const trackEls = document.querySelectorAll(".track");
-const controls = document.getElementById("controls");
-
-/* PLAY TRACK */
-function playTrack(index) {
-
+<script>  
+const tracks = [  
+  "music.mp3",  
+  "music1.mp3",  
+  "music2.mp3",  
+  "music3.mp3"  
+];  
+  
+let current = 0;  
+const audio = document.getElementById("audio");  
+const trackEls = document.querySelectorAll(".track");  
+const controls = document.getElementById("controls");  
+  
+function playTrack(index) {  
   current = index;
-
-  audio.src = tracks[index];
-  audio.load();
-  audio.play().catch(e => console.log(e));
-
-  trackEls.forEach(t => t.classList.remove("active"));
-  trackEls[index].classList.add("active");
-
-  controls.classList.add("show");
-}
-
-/* PLAY / PAUSE */
-function toggle() {
-  if (audio.paused) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
-}
-
-/* NEXT */
-function next() {
-  current = (current + 1) % tracks.length;
-  playTrack(current);
-}
-
-/* PREV */
-function prev() {
-  current = (current - 1 + tracks.length) % tracks.length;
-  playTrack(current);
-}
-
-/* 🌸 SAKURA */
-function sakura() {
-  const el = document.createElement("div");
-  el.className = "sakura";
-  el.innerHTML = "🌸";
-    el.style.left = Math.random() * 100 + "vw";
-  el.style.fontSize = (12 + Math.random() * 20) + "px";
-  el.style.animationDuration = (4 + Math.random() * 6) + "s";
-
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 10000);
-}
-
-setInterval(sakura, 120);
-
-</script>
-
-</body>
+[24.05.2026 21:05] Амирочек ( Pseudonym : LouryXQ ): audio.src = tracks[index];  
+  audio.play();  
+  
+  trackEls.forEach(t => t.classList.remove("active"));  
+  trackEls[index].classList.add("active");  
+  
+  trackEls[index].after(controls);  
+  controls.classList.add("show");  
+}  
+  
+function toggle() {  
+  if (audio.paused) audio.play();  
+  else audio.pause();  
+}  
+  
+function next() {  
+  current = (current + 1) % tracks.length;  
+  playTrack(current);  
+}  
+  
+function prev() {  
+  current = (current - 1 + tracks.length) % tracks.length;  
+  playTrack(current);  
+}  
+  
+/* 🌸 сакура */  
+function sakura() {  
+  const el = document.createElement("div");  
+  el.className = "sakura";  
+  el.innerHTML = "🌸";  
+el.style.left = Math.random() * 100 + "vw";  
+  el.style.fontSize = (Math.random() * 25 + 15) + "px";  
+  el.style.animationDuration = (Math.random() * 5 + 5) + "s";  
+  
+  document.body.appendChild(el);  
+  setTimeout(() => el.remove(), 10000);  
+}  
+  
+setInterval(sakura, 100);  
+</script>  </body>  
 </html>
