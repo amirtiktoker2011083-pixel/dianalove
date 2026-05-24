@@ -15,119 +15,74 @@
 
 body{
     font-family:Arial,sans-serif;
-    overflow-y:auto;
     min-height:100vh;
     background:linear-gradient(180deg,#fff4fa,#ffd6ea,#ffbddb);
+    overflow-x:hidden;
 }
 
-/* CLOCK */
-.time-box{
-    position:fixed;
-    top:15px;
-    left:50%;
-    transform:translateX(-50%);
-    background:white;
-    padding:12px 32px;
-    border-radius:999px;
-    z-index:9999;
-}
-
-#clock{
-    color:#ff7eb7;
-    font-size:24px;
-    font-weight:bold;
-}
-
-/* CONTAINER */
+/* кнопка */
 .container{
-    padding-top:90px;
     display:flex;
-    flex-direction:column;
+    justify-content:center;
     align-items:center;
+    flex-direction:column;
+    padding-top:60px;
 }
 
-/* BUTTON */
 .love-btn{
-    margin:20px auto 40px;
-    display:inline-block;
     background:#ff8fc7;
     color:white;
-    padding:14px 34px;
+    padding:16px 36px;
     border-radius:999px;
-    text-decoration:none;
+    font-size:20px;
     font-weight:bold;
-    transition:0.25s ease;
+    cursor:pointer;
+    border:none;
+    transition:0.3s;
+    margin-bottom:40px;
 }
 
 .love-btn:hover{
-    transform:scale(1.1);
-    box-shadow:0 0 20px rgba(255,255,255,0.8);
-}
-
-/* PHOTOS */
-.photos{
-    position:relative;
-    width:100%;
-    height:700px;
-}
-
-.photo{
-    position:absolute;
-    width:38vw;
-    max-width:170px;
-    border-radius:18px;
-    border:3px solid white;
-    box-shadow:0 0 20px rgba(255,255,255,0.9);
-    transition:0.25s ease;
-}
-
-.photo:hover{
     transform:scale(1.08);
+    box-shadow:0 0 25px rgba(255,255,255,0.7);
 }
-
-.photo1{top:20px;left:20px;rotate:-5deg;}
-.photo2{top:250px;right:20px;rotate:5deg;}
-.photo3{top:500px;left:40px;rotate:-4deg;}
 
 /* PLAYLIST */
 .playlist{
-    width:100%;
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding-bottom:80px;
+    gap:14px;
+    margin-top:20px;
 }
 
 .playlist-title{
     color:white;
-    font-size:44px;
-    margin-bottom:30px;
-
-    text-shadow:
-        0 0 10px #fff,
-        0 0 20px #fff,
-        0 0 40px #ff7eb7;
+    font-size:40px;
+    font-weight:bold;
+    text-shadow:0 0 15px white;
+    margin-bottom:10px;
 }
 
-/* TRACK */
+/* TRACKS */
 .track{
-    width:300px;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(10px);
-    padding:16px;
-    border-radius:18px;
-    border:2px solid white;
-    margin-bottom:16px;
-    color:white;
+    width:320px;
+    padding:14px;
+    border-radius:15px;
     text-align:center;
     cursor:pointer;
-    transition:0.3s;
+
+    background:rgba(255,255,255,0.15);
+    color:white;
+    border:2px solid white;
+
+    transition:0.25s;
     text-shadow:0 0 8px white;
 }
 
 .track:hover{
     transform:scale(1.05);
-    box-shadow:0 0 20px rgba(255,255,255,0.6);
+    box-shadow:0 0 20px rgba(255,255,255,0.5);
 }
 
 .track.active{
@@ -135,30 +90,7 @@ body{
     box-shadow:0 0 25px white;
 }
 
-/* CONTROLS */
-.controls{
-    display:none;
-    gap:30px;
-    margin:20px 0;
-}
-
-.controls.show{
-    display:flex;
-}
-
-.controls span{
-    width:58px;
-    height:58px;
-    background:white;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    font-size:26px;
-}
-
-/* SAKURA */
+/* 🌸 сакура */
 .sakura{
     position:fixed;
     top:-20px;
@@ -174,130 +106,85 @@ body{
     }
 }
 
+audio{
+    display:none;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="time-box">
-    <span id="clock">00 : 00</span>
-</div>
-
 <div class="container">
 
-<a href="https://t.me/ilmbfsmDD" class="love-btn">
-    Люблю Диану
-</a>
+    <button class="love-btn" onclick="toggleMusic()">
+        Люблю Диану
+    </button>
 
-<div class="photos">
-    <img src="d1.jpg" class="photo photo1">
-    <img src="d2.jpg" class="photo photo2">
-    <img src="d3.jpg" class="photo photo3">
-</div>
+    <div class="playlist">
+        <div class="playlist-title">playlist</div>
 
-<div class="playlist">
-
-<div class="playlist-title">playlist</div>
-
-<div class="track" onclick="playTrack(0)">spicy</div>
-<div class="track" onclick="playTrack(1)">Тебе Нравится</div>
-<div class="track" onclick="playTrack(2)">Ведь Меня Погубила Глубина Этих Глаз</div>
-
-<div class="controls" id="controls">
-    <span onclick="prev()">⏮️</span>
-    <span onclick="toggle()" id="playBtn">▶️</span>
-    <span onclick="next()">⏭️</span>
-</div>
+        <div class="track" onclick="playTrack(0)">spicy</div>
+        <div class="track" onclick="playTrack(1)">Тебе Нравится</div>
+        <div class="track" onclick="playTrack(2)">Ведь Меня Погубила Глубина Этих Глаз</div>
+    </div>
 
 </div>
 
-</div>
-
-<audio id="audio" preload="auto"></audio>
+<audio id="audio"></audio>
 
 <script>
-
-function updateClock(){
-    const d=new Date();
-    let h=d.getHours();
-    let m=d.getMinutes();
-    if(h<10)h="0"+h;
-    if(m<10)m="0"+m;
-    document.getElementById("clock").innerText=h+" : "+m;
-}
-setInterval(updateClock,1000);
-updateClock();
-    const tracks=[
-    "mp1.mp3",
-    "mp2.mp3",
-    "mp3.mp3"
-];
-
-let current=0;
-
-const audio=document.getElementById("audio");
-const trackEls=document.querySelectorAll(".track");
-const controls=document.getElementById("controls");
-const playBtn=document.getElementById("playBtn");
-
-async function playTrack(i){
-
-    current=i;
-
-    audio.pause();
-    audio.src=tracks[i];
-    audio.load();
-
-    try{
-        await audio.play();
-        playBtn.innerText="⏸️";
-    }catch(e){
-        console.log("AUDIO ERROR:",e);
-    }
-
-    trackEls.forEach(t=>t.classList.remove("active"));
-    trackEls[i].classList.add("active");
-
-    controls.classList.add("show");
-}
-
-function toggle(){
-    if(audio.paused){
-        audio.play();
-        playBtn.innerText="⏸️";
-    }else{
-        audio.pause();
-        playBtn.innerText="▶️";
-    }
-}
-
-function next(){
-    current=(current+1)%tracks.length;
-    playTrack(current);
-}
-
-function prev(){
-    current=(current-1+tracks.length)%tracks.length;
-    playTrack(current);
-}
 
 /* 🌸 SAKURA */
 function createSakura(){
     const el=document.createElement("div");
     el.className="sakura";
-
-    const items=["🌸","🍃","💮"];
-    el.innerHTML=items[Math.floor(Math.random()*items.length)];
+    el.innerHTML="🌸";
 
     el.style.left=Math.random()*100+"vw";
     el.style.fontSize=(12+Math.random()*20)+"px";
     el.style.animationDuration=(4+Math.random()*6)+"s";
 
     document.body.appendChild(el);
+
     setTimeout(()=>el.remove(),10000);
 }
 
 setInterval(createSakura,120);
+
+/* 🎵 MUSIC */
+const tracks=[
+    "mp1.mp3",
+    "mp2.mp3",
+    "mp3.mp3"
+];
+
+let current=0;
+let audio=document.getElementById("audio");
+const trackEls=document.querySelectorAll(".track");
+
+/* PLAY TRACK */
+function playTrack(i){
+
+    current=i;
+
+    audio.src=tracks[i];
+    audio.load();
+    audio.play().catch(e=>console.log(e));
+
+    trackEls.forEach(t=>t.classList.remove("active"));
+    trackEls[i].classList.add("active");
+}
+
+/* кнопка просто включает/пауза текущий */
+function toggleMusic(){
+
+    if(audio.paused){
+        audio.play().catch(e=>console.log(e));
+    } else {
+        audio.pause();
+    }
+}
 
 </script>
 
