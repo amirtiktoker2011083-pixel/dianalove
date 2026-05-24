@@ -18,7 +18,7 @@ body{
 
     font-family:Arial,sans-serif;
 
-    overflow-x:hidden;
+    overflow:hidden;
 
     min-height:100vh;
 
@@ -77,15 +77,20 @@ body{
 
     position:fixed;
 
-    top:-60px;
-
-    z-index:999;
+    top:-50px;
 
     pointer-events:none;
 
-    animation:
-    sakuraFall linear forwards,
-    glow 2s ease-in-out infinite alternate;
+    z-index:999;
+
+    animation-name:sakuraFall;
+
+    animation-timing-function:linear;
+
+    animation-fill-mode:forwards;
+
+    filter:
+    drop-shadow(0 0 6px white);
 }
 
 @keyframes sakuraFall{
@@ -94,6 +99,7 @@ body{
 
         transform:
         translateY(-100px)
+        translateX(0px)
         rotate(0deg);
 
         opacity:0;
@@ -107,22 +113,12 @@ body{
 
         transform:
         translateY(120vh)
+        translateX(
+            calc(-40px + 80px * var(--random))
+        )
         rotate(360deg);
 
         opacity:0;
-    }
-}
-
-@keyframes glow{
-
-    from{
-        filter:
-        drop-shadow(0 0 2px white);
-    }
-
-    to{
-        filter:
-        drop-shadow(0 0 12px #ff8fc7);
     }
 }
 
@@ -143,6 +139,50 @@ body{
     flex-direction:column;
 
     align-items:center;
+}
+
+/* LOVE BUTTON */
+
+.love-btn{
+
+    margin-top:10px;
+
+    margin-bottom:40px;
+
+    text-decoration:none;
+
+    background:#ff8fc7;
+
+    color:white;
+
+    padding:14px 34px;
+
+    border-radius:999px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    box-shadow:
+    0 0 12px rgba(255,255,255,0.5);
+
+    text-shadow:
+    0 0 6px rgba(255,255,255,0.7);
+
+    transition:0.25s ease;
+
+    z-index:20;
+}
+
+/* ПУЛЬС */
+
+.love-btn:hover,
+.love-btn:active{
+
+    transform:scale(1.08);
+
+    box-shadow:
+    0 0 22px rgba(255,255,255,0.9);
 }
 
 /* ФОТО */
@@ -173,7 +213,7 @@ body{
 
     z-index:10;
 
-    transition:0.3s;
+    transition:0.25s ease;
 }
 
 /* ПУЛЬС */
@@ -239,7 +279,7 @@ body{
     0 0 30px white;
 }
 
-/* ТРЕК */
+/* TRACK */
 
 .track{
 
@@ -332,10 +372,34 @@ body{
 
     transition:0.2s;
 }
-
-.controls span:hover{
+    .controls span:hover{
 
     transform:scale(1.08);
+}
+
+/* МОБИЛКИ */
+
+@media(max-width:600px){
+
+    .photos{
+
+        height:640px;
+    }
+
+    .photo{
+
+        width:42vw;
+    }
+
+    .playlist-title{
+
+        font-size:36px;
+    }
+
+    .track{
+
+        width:88%;
+    }
 }
 
 </style>
@@ -350,6 +414,14 @@ body{
 </div>
 
 <div class="container">
+
+    <!-- КНОПКА -->
+
+    <a href="https://t.me/ilmbfsmDD" target="_blank" class="love-btn">
+
+        Люблю Диану
+
+    </a>
 
     <!-- ФОТО -->
 
@@ -368,11 +440,10 @@ body{
     <div class="playlist">
 
         <div class="playlist-title">playlist</div>
+
         <div class="track" onclick="playTrack(0)">
             spicy
         </div>
-
-        <!-- КНОПКИ -->
 
         <div class="controls" id="controls">
 
@@ -398,13 +469,13 @@ body{
 
 <!-- AUDIO -->
 
-<audio id="audio"></audio>
+<audio id="audio" playsinline></audio>
 
 <script>
 
-/* 🌸 БЕСКОНЕЧНЫЕ ЛЕПЕСТКИ */
+/* 🌸 ПЛАВНЫЕ ЛЕПЕСТКИ */
 
-setInterval(() => {
+function createSakura(){
 
     const sakura = document.createElement("div");
 
@@ -413,13 +484,21 @@ setInterval(() => {
     sakura.innerHTML = "🌸";
 
     sakura.style.left =
-        Math.random() * window.innerWidth + "px";
+        Math.random() * 100 + "vw";
 
     sakura.style.fontSize =
-        (18 + Math.random() * 22) + "px";
+        (16 + Math.random() * 16) + "px";
+
+    sakura.style.opacity =
+        0.5 + Math.random() * 0.5;
 
     sakura.style.animationDuration =
-        (4 + Math.random() * 4) + "s";
+        (8 + Math.random() * 8) + "s";
+
+    sakura.style.setProperty(
+        "--random",
+        Math.random()
+    );
 
     document.body.appendChild(sakura);
 
@@ -427,9 +506,14 @@ setInterval(() => {
 
         sakura.remove();
 
-    }, 9000);
+    }, 17000);
+}
 
-}, 120);
+/* СПОКОЙНО */
+
+setInterval(createSakura, 350);
+
+
 
 /* ЧАСЫ */
 
@@ -450,6 +534,8 @@ function updateClock(){
 setInterval(updateClock,1000);
 
 updateClock();
+
+
 
 /* ТРЕКИ */
 
@@ -472,17 +558,30 @@ const controls = document.getElementById("controls");
 
 const playBtn = document.getElementById("playBtn");
 
+
+
 /* PLAY TRACK */
 
 function playTrack(index){
 
     current = index;
 
+    audio.pause();
+
     audio.src = tracks[index];
 
-    audio.play();
+    audio.load();
 
-    playBtn.innerText = "⏸️";
+    audio.play()
+    .then(() => {
+
+        playBtn.innerText = "⏸️";
+
+    })
+    .catch(err => {
+
+        console.log("Ошибка:", err);
+    });
 
     trackEls.forEach(track =>
         track.classList.remove("active")
@@ -494,6 +593,8 @@ function playTrack(index){
 
     controls.classList.add("show");
 }
+
+
 
 /* PLAY / PAUSE */
 
@@ -513,6 +614,8 @@ function toggle(){
     }
 }
 
+
+
 /* NEXT */
 
 function next(){
@@ -522,6 +625,8 @@ function next(){
     playTrack(current);
 }
 
+
+
 /* PREV */
 
 function prev(){
@@ -530,6 +635,8 @@ function prev(){
 
     playTrack(current);
 }
+
+
 
 /* AUTO NEXT */
 
